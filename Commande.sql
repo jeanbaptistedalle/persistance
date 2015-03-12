@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS Commande;
+CREATE TABLE IF NOT EXISTS Commande(
+ idCommande INT AUTO_INCREMENT,
+ idClient INT,
+ dateCommande TIMESTAMP,
+ CONSTRAINT PRIMARY KEY(idCommande),
+ CONSTRAINT FOREIGN KEY(idClient) REFERENCES Client(idClient));

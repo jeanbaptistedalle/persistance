@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="my.first.step.hibernate.Client" table="Client">
+
+		<!-- On indique ici la liste des colonnes de la table Client et leur équivalent 
+			dans la classe Client. Il est possible d'y ajouter aux colonnes des propriétés 
+			comme length, not-null, unique, etc. -->
+		<id name="idClient" type="java.lang.Integer">
+			<column name="idClient" />
+			<!-- Generator indique à hibernate que cette colonne est générée par la 
+				base de données. Si elle n'est pas renseignée lors d'un enregistrement, hibernate 
+				en génerera la valeur. -->
+			<generator class="identity" />
+		</id>
+
+
+		<property name="nom" type="string">
+			<column name="nom"/>
+		</property>
+
+
+		<property name="prenom" type="string">
+			<column name="prenom"/>
+		</property>
+
+		<!-- Ici, on indique que l'attribut dailyRecords correspond à une relation 
+			one-to-many. Le paramètre 'lazy' est très important, il indique à Hibernate 
+			qu'il doit être fainéant et ne doit charger les stocks qu'en cas de besoin 
+			(lorsque la méthode get est appelée par exemple). Cela permet d'éviter avec 
+			une simple requête de récupérer une objet, qui en importe d'autre, qui eux-même 
+			en importent d'autres, etc. On indique de plus que l'on fera la correspondance 
+			grâce à la colonne stock_id -->
+		<set name="commandes" cascade="save-update" table="Commande"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="idClient" not-null="true" />
+			</key>
+			<one-to-many class="my.first.step.hibernate.Commande" />
+		</set>
+	</class>
+</hibernate-mapping>

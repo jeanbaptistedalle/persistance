@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="my.first.step.hibernate.Commande" table="Commande">
+        <id name="idCommande" type="java.lang.Integer">
+            <column name="idCommande" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="dateCommande" type="date">
+            <column name="dateCommande"/>
+        </property>
+        
+		<!-- Ici, on indique que l'attribut dailyRecords correspond à une relation 
+			many-to-one. On indique de plus que l'on fera la correspondance grâce à la colonne stock_id. -->        
+        <many-to-one name="client" class="my.first.step.hibernate.Client" fetch="select">
+            <column name="idClient" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
